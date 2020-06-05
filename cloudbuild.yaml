@@ -11,6 +11,8 @@ steps:
   - 'instances'
   - 'update-container'
   - '$_INSTANCE_NAME'
+  - '--zone'
+  - '$_INSTANCE_ZONE'
   - '--container-image'
   - 'gcr.io/cobalt-compound-279315/nodejs-docker-webapp:$COMMIT_SHA'
   
