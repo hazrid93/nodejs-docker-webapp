@@ -4,3 +4,13 @@ steps:
   timeout: 500s
 - name: 'gcr.io/cloud-builders/docker'
   args: ['push', 'gcr.io/cobalt-compound-279315/nodejs-docker-webapp:$COMMIT_SHA']
+# Deploy an image from Container Registry to Cloud Run
+- name: 'gcr.io/cloud-builders/gcloud'
+  args:
+  - 'compute'
+  - 'instances'
+  - 'update-container'
+  - '$_INSTANCE_NAME'
+  - '--container-image'
+  - 'gcr.io/cobalt-compound-279315/nodejs-docker-webapp:$COMMIT_SHA'
+  
