@@ -1,6 +1,6 @@
 steps:
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/cobalt-compound-279315/:$COMMIT_SHA', '.']
+  args: ['build', '-t', 'gcr.io/cobalt-compound-279315/nodejs-docker-webapp:$COMMIT_SHA', '.']
   timeout: 500s
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'gcr.io/cobalt-compound-279315/:$COMMIT_SHA']
+  args: ['push', 'gcr.io/cobalt-compound-279315/nodejs-docker-webapp:$COMMIT_SHA']
