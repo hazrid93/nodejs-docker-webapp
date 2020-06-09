@@ -7,11 +7,11 @@ substitutions:
         _DEPLOY_INSTANCE_ZONE: #instance zone for deployment target
         
 steps:
-- name: gcr.io/$PROJECT_ID/$(_SONAR_PROJECT_PATH):latest
-  entrypoint: /bin/bash
-  args:
-    - '-c'
-    - 'if [ $BRANCH_NAME != 'production' ]; then sonar-scanner -Dsonar.host.url={$_SONAR_HOST_URL} -Dsonar.login=${_SONAR_LOGIN} -Dsonar.projectKey=${_SONAR_PROJECT_NAME} -Dsonar.sources=. ; fi'
+#- name: gcr.io/$PROJECT_ID/$(_SONAR_PROJECT_PATH):latest
+#  entrypoint: /bin/bash
+#  args:
+#    - '-c'
+#    - 'if [ $BRANCH_NAME != 'production' ]; then sonar-scanner -Dsonar.host.url={$_SONAR_HOST_URL} -Dsonar.login=${_SONAR_LOGIN} -Dsonar.projectKey=${_SONAR_PROJECT_NAME} -Dsonar.sources=. ; fi'
 - name: 'gcr.io/cloud-builders/docker'
   args: ['build', '-t', 'gcr.io/$PROJECT_ID/$REPO_NAME/$BRANCH_NAME:$COMMIT_SHA', '.']
 - name: 'gcr.io/cloud-builders/docker'
