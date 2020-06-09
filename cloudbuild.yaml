@@ -8,7 +8,7 @@ substitutions:
         
 steps:
 - name: gcr.io/$PROJECT_ID/$(_SONAR_PROJECT_PATH):latest
-  entrypoint: 'bash'
+  entrypoint: /bin/bash
   args:
     - '-c'
     - 'if [ $BRANCH_NAME != 'production' ]; then sonar-scanner -Dsonar.host.url={$_SONAR_HOST_URL} -Dsonar.login=${_SONAR_LOGIN} -Dsonar.projectKey=${_SONAR_PROJECT_NAME} -Dsonar.sources=. ; fi'
