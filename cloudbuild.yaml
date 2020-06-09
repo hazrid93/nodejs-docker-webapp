@@ -6,4 +6,5 @@ steps:
     - |
         gcloud compute instances describe ${_DEPLOY_INSTANCE_NAME} --zone ${_DEPLOY_INSTANCE_ZONE} > gce-vm-status.txt
         STATUS_VALUE="$$(grep -oP '(?<=status:).+' gce-vm-status.txt)"
-        echo $$STATUS_VALUE
+        echo $$STATUS_VALUE > gce-vm-status.txt
+        cat gce-vm-status.txt
