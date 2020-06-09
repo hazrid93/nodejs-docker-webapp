@@ -5,4 +5,4 @@ steps:
     - '-c'
     - |
         gcloud compute instances describe ${_DEPLOY_INSTANCE_NAME} --zone ${_DEPLOY_INSTANCE_ZONE} > gce-vm-status.txt
-        echo gce-vm-status.txt
+        cat gce-vm-status.txt
