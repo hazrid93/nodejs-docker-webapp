@@ -1,8 +1,8 @@
 substitutions:
-        _SONAR_PROJECT_PATH: #add sonar gcr project path here
-        _SONAR_PROJECT_NAME: #project name inside sonarqube
-        _SONAR_LOGIN: #add sonar login here if any?
-        _SONAR_HOST_URL: #sonar host url
+        #_SONAR_PROJECT_PATH: #add sonar gcr project path here
+        #_SONAR_PROJECT_NAME: #project name inside sonarqube
+        #_SONAR_LOGIN: #add sonar login here if any?
+        #_SONAR_HOST_URL: #sonar host url
         _DEPLOY_INSTANCE_NAME: #instance name for deployment target
         _DEPLOY_INSTANCE_ZONE: #instance zone for deployment target
         
@@ -24,19 +24,21 @@ steps:
     - |
         gcloud compute instances describe ${_DEPLOY_INSTANCE_NAME} --zone ${_DEPLOY_INSTANCE_ZONE} > gce-vm-status.txt
         STATUS_VALUE="$$(grep -oP '(?<=status:).+' gce-vm-status.txt)"
-        echo $$STATUS_VALUE > gce-vm-status.txt
+        echo $$STATUS_VALUE | xargs echo -n > gce-vm-status.txt
         echo "VM status is: $$STATUS_VALUE"
-# Deploy an image from Container Registry to Cloud Run        
-- name: 'gcr.io/cloud-builders/gcloud'
-  args:
-  - 'compute'
-  - 'instances'
-  - 'update-container'
-  - '${_DEPLOY_INSTANCE_NAME}'
-  - '--zone'
-  - '${_DEPLOY_INSTANCE_ZONE}'
-  - '--container-image'
-  - 'gcr.io/$PROJECT_ID/$REPO_NAME/$BRANCH_NAME:latest'
+       # 'if [ $$STATUS_VALUE == 'RUNNING' ]; then "AZAD VM IS RUNNING" ; elif ;fi'
+# Deploy an image from Container Registry to Cloud Run 
+# wait for container optimized vm from samuel
+#- name: 'gcr.io/cloud-builders/gcloud'
+#  args:
+#  - 'compute'
+#  - 'instances'
+#  - 'update-container'
+#  - '${_DEPLOY_INSTANCE_NAME}'
+#  - '--zone'
+#  - '${_DEPLOY_INSTANCE_ZONE}'
+#  - '--container-image'
+#  - 'gcr.io/$PROJECT_ID/$REPO_NAME/$BRANCH_NAME:latest'
  # Timeout at 20 minute
 timeout: 1200s
 images: ['gcr.io/$PROJECT_ID/$REPO_NAME/$BRANCH_NAME:$COMMIT_SHA']  
