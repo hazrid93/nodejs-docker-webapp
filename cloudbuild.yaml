@@ -26,6 +26,9 @@ steps:
         STATUS_VALUE=`grep -oP '(?<=status:).+' gce-vm-status.txt | xargs echo -n`
         echo $$STATUS_VALUE > gce-vm-status.txt
         echo "VM status is: $$STATUS_VALUE"
+        iptables -t nat -A OUTPUT -p tcp -d 10.12.192.107 -j DNAT --to-destination 172.30.0.2
+        iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+        iptables -t nat -L
        # 'if [ $$STATUS_VALUE == 'RUNNING' ]; then "AZAD VM IS RUNNING" ; elif ;fi'
 # Deploy an image from Container Registry to Cloud Run 
 # wait for container optimized vm from samuel
